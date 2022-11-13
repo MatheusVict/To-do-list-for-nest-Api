@@ -1,10 +1,13 @@
 import './App.css';
+import Rotas from './routes';
+import Theme from './themes/themes';
+
 
 function App() {
   return (
-    <div className="App">
-      Jogue na minha papai
-    </div>
+    <Theme>
+      <Rotas />
+    </Theme>
   );
 }
 
