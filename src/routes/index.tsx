@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import App from '../App';
-import Home from '../pages/Home';
-import { NotFoundPage } from '../pages/NotFoundPage';
+import Home from 'pages/Home';
+import { NotFoundPage } from 'pages/NotFoundPage';
 
 const Rotas = () => {
   return (

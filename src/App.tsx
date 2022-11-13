@@ -1,6 +1,6 @@
 import './App.css';
-import Rotas from './routes';
-import Theme from './themes/themes';
+import Rotas from 'routes';
+import Theme from 'themes/themes';
 
 
 function App() {
