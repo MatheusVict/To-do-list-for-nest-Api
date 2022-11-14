@@ -1,12 +1,17 @@
 import styled from "styled-components";
+import { flex, FlexProps } from "styled-system";
 
-export const Input = styled.input`
+type InputProps = FlexProps;
+
+export const Input = styled.input<InputProps>`
   background-color: transparent;
   padding: 10px;
   border: 0;
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   &::placeholder {
-    color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.2);
   }
+
+  ${flex}
 `;
