@@ -17,6 +17,10 @@ const secondary = '#f9B531'
 
 const theme = {
   fontSizes,
+  fonts: {
+    primary: 'Roboto',
+    secondary: 'Open Sans'
+  }, 
   colors: {
     primary,
     secondary,
