@@ -22,6 +22,8 @@ const theme = {
   }
 };
 
+export type ThemeType = typeof theme;
+
 const Theme: React.FC<ThemesProps> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>{children}</ThemeProvider>
