@@ -6,3 +6,4 @@ export * from './Column';
 export * from './List';
 export * from './ListItem';
 export * from './Logo';
+export * from './Icon';
