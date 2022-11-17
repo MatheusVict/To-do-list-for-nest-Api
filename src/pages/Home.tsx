@@ -6,7 +6,7 @@ const secondsDefault = 3;
 
 const Home = () => {
   // Meu hook personalizado
-  const { task, getAll, createTodo } = useTodo()
+  const { task, getAll, createTodo, updateTodo } = useTodo()
 
   const [taskName, setTaksName] = useState('');
   const [seconds, setSeconds] = useState(secondsDefault);
@@ -65,6 +65,14 @@ const Home = () => {
     setSeconds(secondsDefault);
   }, [handlePauseButton])
 
+  const handleDoneButton = useCallback(async () => {
+  const taskExist = task[taskIndex];
+  if (taskExist) {
+    await updateTodo(taskExist.id, {...taskExist, isDone: 1})
+    await getAll();
+  }
+  }, [updateTodo, task, taskIndex, getAll])
+
   const handleStage = useMemo(() => {
     switch (stage) {
       case 'ready':
@@ -116,7 +124,7 @@ const Home = () => {
             <Button variant='primary' p='10px 20px' mx='5px' onClick={handleRestartButton}>
                 <Icon variant='restart'/>
               </Button>
-              <Button variant='primary' p='10px 20px' mx='5px'>
+              <Button variant='primary' p='10px 20px' mx='5px' onClick={handleDoneButton}>
                 <Icon variant='done'/>
               </Button>
             </Row>
@@ -132,7 +140,7 @@ const Home = () => {
           </>
         );
     }
-  }, [stage, handlePauseButton, handleStopButton, handleRestartButton])
+  }, [stage, handlePauseButton, handleStopButton, handleRestartButton, handleDoneButton])
 
   useEffect(() => {
     getAll();
@@ -153,7 +161,7 @@ const Home = () => {
         <Input flex={1} placeholder='Enter a new Task' value={taskName} onChange={(e: any) => setTaksName(e.target.value)}/>
         <Button onClick={handleSubmit}>ok</Button>
       </Row>
-      <List itens={task} onClick={setTaskIndex} />
+      <List itens={task} selectedIndex={taskIndex} onClick={setTaskIndex} />
     </Column>
   )
 }
