@@ -1,25 +1,25 @@
 import { Button, Row, Input, Text, Column, List, Logo, Icon } from 'components';
-import React, { useCallback, useMemo, useState } from 'react'
+import { useTodo } from 'hooks';
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 const secondsDefault = 3;
 
 const Home = () => {
+  // Meu hook personalizado
+  const { task, getAll, createTodo } = useTodo()
+
   const [taskName, setTaksName] = useState('');
-  const [task, setTask] = useState<{ label: string | undefined}[]>([]);
   const [seconds, setSeconds] = useState(secondsDefault);
   const [timer, setTimer] = useState<any>();
   const [stage, setStage] = useState('ready');
+  const [taskIndex, setTaskIndex] = useState(0);
 
-  const handleSubmit = () => {
-    if (!taskName) return;
-    
-    setTask(previous => {
-      const copy = [...previous];
-      copy.push({ label: taskName });
-      return copy;
-    })
+  const handleSubmit = useCallback(async () => {
+    await createTodo({ task: taskName, isDone: 0 });
+    await getAll();
     setTaksName('');
-  };
+  },[createTodo, getAll, taskName]);
+
   // Converte o tempo os segundos recebidos em minutos e segundos certos
   const secondsToTime = (sec: number) => {
     const divisorMinuts = sec % 3600;
@@ -134,6 +134,10 @@ const Home = () => {
     }
   }, [stage, handlePauseButton, handleStopButton, handleRestartButton])
 
+  useEffect(() => {
+    getAll();
+  }, [getAll])
+
   return (
     <Column width="600px" margin="0 auto">
       <Column width="100%" alignItems="center" py="25px">
@@ -149,7 +153,7 @@ const Home = () => {
         <Input flex={1} placeholder='Enter a new Task' value={taskName} onChange={(e: any) => setTaksName(e.target.value)}/>
         <Button onClick={handleSubmit}>ok</Button>
       </Row>
-      <List itens={task} />
+      <List itens={task} onClick={setTaskIndex} />
     </Column>
   )
 }
